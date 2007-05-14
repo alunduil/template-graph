@@ -1,0 +1,139 @@
+###############################################################################
+# File:			README
+# Author:		Alex Brandt
+# Date:			04/08/07
+###############################################################################
+
+***********
+* INSTALL *
+***********
+
+This program was created using Gentoo Linux with a 2.6.19 gentoo sources kernel
+revision 5 on an X86_64 architecture.
+The compiler used for building and testing is gcc version 4.1.1 release 3 in the
+portage tree provided by Gentoo (www.gentoo.org).
+
+To build this program, simply type 'make' which creates the default executable,
+prog1.
+
+***********************
+* Program Description *
+***********************
+
+This program utilizes the following:
+	1) Boost's Lambda Library
+	2) Boost's Tuple Library
+	3) STL set
+	4) STL list
+	5) STL for_each
+	6) STL find_if
+	7) Dijkstra's shortest path algorithm.
+
+****************************
+* Program Input and Output *
+****************************
+
+Input ::
+	CLI utility to find the shortest path between two nodes.
+
+Ouput ::
+	Outputs the graph as a columnar list with arrows to each vertices' neighbors.
+
+	Example:
+		Dumping graph:
+			Number of Vertices: 12	Number of Edges: 29
+			Fargo -> Minneapolis:240
+			Minneapolis -> Fargo:240 -> Chicago:409 -> Denver:920
+			etc.
+
+	Then prompts for source and destination, and outputs the shortest path.
+
+******************
+* Program Design *
+******************
+
+The following class declarations are utilized:
+
+Graph ::
+	Specification:	graph.h
+	Implementation:	graph.h
+
+	Description:
+		This Graph can be Weighted, Unweighted, Directed, or Undirected.
+
+	Fields:
+		direction		-	Whether the graph is directed or not.
+		edgeCount		-	The number of edges in the graph.
+		vertices		-	A list of pointers to the vertices.
+		weightin		-	Whether the graph is weighted or not.
+
+Vertex ::
+	Specification:	vertex.h
+	Implementation:	vertex.h
+
+	Description:
+		Vertex of a graph. Basically a node in the network. It's a wonderful day in the neighborhood...
+
+	Fields:
+		mrRogers		-	The data the vertex holds.
+		neighborhood	-	A list of tuples with the vertex pointer and the weight to it.
+
+The following function declarations are utilized:
+
+int main();
+---------------------------------
+	Glossary of Variables:
+			Graph<string>			map(Directed, Weighted);	//!< Map of the cities we want.
+			string					sourceCity,					//!< Source City.
+									destinationCity;			//!< Destination City.
+			queue<Vertex<string>*>	shortestPath;				//!< Shortest Path.
+
+			Vertex<string>	&fargo			= map.InsertNewVertex("Fargo"),
+							&minneapolis	= map.InsertNewVertex("Minneapolis"),
+							&chicago		= map.InsertNewVertex("Chicago"),
+							&detroit		= map.InsertNewVertex("Detroit"),
+							&newYork		= map.InsertNewVertex("New York"),
+							&miami			= map.InsertNewVertex("Miami"),
+							&houston		= map.InsertNewVertex("Houston"),
+							&stLouis		= map.InsertNewVertex("St. Louis"),
+							&denver			= map.InsertNewVertex("Denver"),
+							&seattle		= map.InsertNewVertex("Seattle"),
+							&losAngeles		= map.InsertNewVertex("Los Angeles"),
+							&phoenix		= map.InsertNewVertex("Phoenix");
+
+	This is the driving function of the program, and calls the following functions:
+
+**************
+* File Index *
+**************
+
+File				Functions/Purpose			Description
+----				-----------------			-----------
+
+main.cpp			main						The main function.
+
+graph.h				Graph class declaration.	Specification and Implementation
+												of the Graph class.
+
+vertex.h			Vertex class declaration.	Specification and Implementation
+												of the Vertex class.
+
+Makefile			compile & link				Produces the executable: prog1
+
+README				this file
+
+*******************
+* Program Testing *
+*******************
+
+Checked several paths, and found only one problem.
+
+**************
+* Known Bugs *
+**************
+
+If the source or destination cities are not typed correctly the utility will hang.
+Looking at how to get an exception into the workings, but can't figure out where to
+place it right now.
+
+If bugs are found please email Alex Brandt <alunduil@alunduil.com> with a bugreport.
